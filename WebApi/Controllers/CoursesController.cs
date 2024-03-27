@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApi.Dtos;
+using WebApi.Filters;
 using WebApi.Services;
 
 namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[UseApiKey]
 public class CoursesController(CourseService courseService) : ControllerBase
 {
     private readonly CourseService _courseService = courseService;
@@ -58,7 +60,7 @@ public class CoursesController(CourseService courseService) : ControllerBase
         }
     }
 
-    [HttpGet("{title}")]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetCoursebyIdAsync(int id)
     {
         try

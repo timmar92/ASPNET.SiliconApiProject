@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using WebApi.Config;
 using WebApi.Contexts;
 using WebApi.Repositories;
 using WebApi.Services;
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.RegisterSwagger();
 
 builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 builder.Services.AddScoped<CourseService>();
@@ -27,7 +29,7 @@ builder.Services.AddScoped<SubscriberRepository>();
 var app = builder.Build();
 app.UseCors(x => x.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(x => x.SwaggerEndpoint("/swagger/v1/swagger.json", "Silicon Web Api v1"));
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
