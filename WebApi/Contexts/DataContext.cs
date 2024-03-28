@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebApi.Entities;
+using WebApi.Entities.User;
 
 namespace WebApi.Contexts;
 
@@ -11,7 +12,12 @@ public class DataContext(DbContextOptions<DataContext> options) : DbContext(opti
     public DbSet<Author> Authors { get; set; }
     public DbSet<Reviews> Reviews { get; set; }
 
+
     public DbSet<SubscriberEntity> Subscribers { get; set; }
 
+
     public DbSet<ContactEntity> ContactForms { get; set; }
+
+
+    public DbSet<UserEntity> Users { get; set; }
 }

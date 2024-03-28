@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApi.Config;
 using WebApi.Contexts;
 using WebApi.Repositories;
+using WebApi.Repositories.Users;
 using WebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,7 @@ builder.Services.RegisterJwt(builder.Configuration);
 builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 builder.Services.AddScoped<CourseService>();
 builder.Services.AddScoped<SubscriberService>();
+builder.Services.AddScoped<UserService>();
 
 
 
@@ -28,6 +30,7 @@ builder.Services.AddScoped<DetailsListRepository>();
 builder.Services.AddScoped<PointListRepository>();
 builder.Services.AddScoped<ReviewsRepository>();
 builder.Services.AddScoped<SubscriberRepository>();
+builder.Services.AddScoped<UserRepository>();
 
 
 
