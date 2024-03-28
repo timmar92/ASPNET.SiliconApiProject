@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebApi.Dtos;
 using WebApi.Filters;
 using WebApi.Services;
@@ -13,6 +14,7 @@ public class CoursesController(CourseService courseService) : ControllerBase
     private readonly CourseService _courseService = courseService;
 
 
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> CreateAsync(CreateCourseDto dto)
     {
