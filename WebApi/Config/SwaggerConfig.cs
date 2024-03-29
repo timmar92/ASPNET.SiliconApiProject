@@ -6,9 +6,11 @@ public static class SwaggerConfig
 {
     public static void RegisterSwagger(this IServiceCollection services)
     {
-        services.AddSwaggerGen(x => 
+        services.AddSwaggerGen(x =>
         {
             x.SwaggerDoc("v1", new OpenApiInfo { Title = "Silicon Web Api", Version = "v1" });
+
+            //API Key
             x.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
             {
                 In = ParameterLocation.Query,
@@ -31,6 +33,7 @@ public static class SwaggerConfig
                     Array.Empty<string>()
                 }
             });
+
         });
     }
 }

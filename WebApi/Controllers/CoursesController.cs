@@ -42,8 +42,7 @@ public class CoursesController(CourseService courseService) : ControllerBase
         return BadRequest();
     }
 
-
-
+    [Authorize]
     [HttpGet]
     public async Task<IActionResult> GetCoursesAsync()
     {
@@ -61,6 +60,7 @@ public class CoursesController(CourseService courseService) : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
     }
+
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetCoursebyIdAsync(int id)

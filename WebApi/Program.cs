@@ -19,6 +19,7 @@ builder.Services.RegisterJwt(builder.Configuration);
 builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 builder.Services.AddScoped<CourseService>();
 builder.Services.AddScoped<SubscriberService>();
+builder.Services.AddScoped<TokenService>();
 
 
 
