@@ -20,6 +20,7 @@ builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer(builder.Configura
 builder.Services.AddScoped<CourseService>();
 builder.Services.AddScoped<SubscriberService>();
 builder.Services.AddScoped<TokenService>();
+builder.Services.AddScoped<ContactService>();
 
 
 
@@ -29,6 +30,7 @@ builder.Services.AddScoped<DetailsListRepository>();
 builder.Services.AddScoped<PointListRepository>();
 builder.Services.AddScoped<ReviewsRepository>();
 builder.Services.AddScoped<SubscriberRepository>();
+builder.Services.AddScoped<ContactRepository>();
 
 
 

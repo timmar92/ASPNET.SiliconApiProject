@@ -42,7 +42,7 @@ public class CoursesController(CourseService courseService) : ControllerBase
         return BadRequest();
     }
 
-    [Authorize]
+
     [HttpGet]
     public async Task<IActionResult> GetCoursesAsync()
     {
