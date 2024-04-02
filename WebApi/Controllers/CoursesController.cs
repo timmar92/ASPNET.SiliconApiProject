@@ -81,4 +81,60 @@ public class CoursesController(CourseService courseService) : ControllerBase
     }
 
 
+    [Authorize]
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateCourseAsync(int id, UpdateCourseDto dto)
+    {
+        try
+        {
+            if (ModelState.IsValid)
+            {
+                var course = await _courseService.GetCourseByIdAsync(id);
+                if (course == null)
+                {
+                    return NotFound();
+                }
+
+                var updatedCourse = await _courseService.UpdateCourseAsync(id, dto);
+                if (updatedCourse == true)
+                {
+                    return NoContent();
+                }
+            }
+            return BadRequest();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+
+    }
+
+
+    [Authorize]
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteCourseAsync(int id)
+    {
+        try
+        {
+            var course = await _courseService.GetCourseByIdAsync(id);
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            var deletedCourse = await _courseService.DeleteCourseAsync(id);
+            if (deletedCourse == true)
+            {
+                return NoContent();
+            }
+            return BadRequest();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
+
+
 }

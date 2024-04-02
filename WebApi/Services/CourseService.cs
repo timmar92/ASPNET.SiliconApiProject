@@ -179,11 +179,21 @@ public class CourseService(CourseRepository courseRepository, AuthorRepository a
 
     // Update
 
-    public async Task<CourseEntity> UpdateCourseAsync(int id, CourseDto courseDto, AuthorDto authorDto, DetailsListDto detailsListDto, PointListDto pointListDto, ReviewsDto reviewsDto)
+    public async Task<bool> UpdateCourseAsync(int id, UpdateCourseDto dto)
     {
         try
         {
+            var courseDto = dto.Course;
+            var detailsListDto = dto.DetailsList;
+            var pointListDto = dto.PointList;
+            var reviewsDto = dto.Reviews;
+
             var existingCourse = await _courseRepository.GetOne(x => x.Id == id);
+
+            if (existingCourse == null)
+            {
+                return false;
+            }
 
             if (existingCourse != null)
             {
@@ -201,70 +211,48 @@ public class CourseService(CourseRepository courseRepository, AuthorRepository a
                 existingCourse.LikesInPercent = courseDto.LikesInPercent;
             }
 
-
-
-            var existingAuthor = await _authorRepository.GetOne(x => x.CourseEntityId == id);
-            if (existingAuthor != null)
+            if (detailsListDto != null && existingCourse!.DetailsList != null)
             {
-                existingAuthor.Name = authorDto.Name;
-                existingAuthor.ImageUrl = authorDto.ImageUrl;
-                existingAuthor.Description = authorDto.Description;
-                existingAuthor.YoutubeUrl = authorDto.YoutubeUrl;
-                existingAuthor.FacebookUrl = authorDto.FacebookUrl;
+                existingCourse.DetailsList.Detail_1 = detailsListDto.Detail_1;
+                existingCourse.DetailsList.Detail_2 = detailsListDto.Detail_2;
+                existingCourse.DetailsList.Detail_3 = detailsListDto.Detail_3;
+                existingCourse.DetailsList.Detail_4 = detailsListDto.Detail_4;
+                existingCourse.DetailsList.Detail_5 = detailsListDto.Detail_5;
+                existingCourse.DetailsList.Detail_6 = detailsListDto.Detail_6;
+                existingCourse.DetailsList.Detail_7 = detailsListDto.Detail_7;
+                existingCourse.DetailsList.Detail_8 = detailsListDto.Detail_8;
+                existingCourse.DetailsList.Detail_9 = detailsListDto.Detail_9;
+                existingCourse.DetailsList.Detail_10 = detailsListDto.Detail_10;
             }
-            await _authorRepository.UpdateOne(existingAuthor!);
 
-
-
-            var existingDetailsList = await _detailsListRepository.GetOne(x => x.CourseEntityId == id);
-            if (existingDetailsList != null)
+            if (pointListDto != null && existingCourse!.PointList != null)
             {
-                existingDetailsList.Detail_1 = detailsListDto.Detail_1;
-                existingDetailsList.Detail_2 = detailsListDto.Detail_2;
-                existingDetailsList.Detail_3 = detailsListDto.Detail_3;
-                existingDetailsList.Detail_4 = detailsListDto.Detail_4;
-                existingDetailsList.Detail_5 = detailsListDto.Detail_5;
-                existingDetailsList.Detail_6 = detailsListDto.Detail_6;
-                existingDetailsList.Detail_7 = detailsListDto.Detail_7;
-                existingDetailsList.Detail_8 = detailsListDto.Detail_8;
-                existingDetailsList.Detail_9 = detailsListDto.Detail_9;
-                existingDetailsList.Detail_10 = detailsListDto.Detail_10;
+                existingCourse.PointList.Point_1 = pointListDto.Point_1;
+                existingCourse.PointList.Point_2 = pointListDto.Point_2;
+                existingCourse.PointList.Point_3 = pointListDto.Point_3;
+                existingCourse.PointList.Point_4 = pointListDto.Point_4;
+                existingCourse.PointList.Point_5 = pointListDto.Point_5;
+                existingCourse.PointList.Point_6 = pointListDto.Point_6;
+                existingCourse.PointList.Point_7 = pointListDto.Point_7;
+                existingCourse.PointList.Point_8 = pointListDto.Point_8;
+                existingCourse.PointList.Point_9 = pointListDto.Point_9;
+                existingCourse.PointList.Point_10 = pointListDto.Point_10;
             }
-            await _detailsListRepository.UpdateOne(existingDetailsList!);
 
-
-
-            var existingPointList = await _pointListRepository.GetOne(x => x.CourseEntityId == id);
-            if (existingPointList != null)
+            if (reviewsDto != null && existingCourse!.Reviews != null)
             {
-                existingPointList.Point_1 = pointListDto.Point_1;
-                existingPointList.Point_2 = pointListDto.Point_2;
-                existingPointList.Point_3 = pointListDto.Point_3;
-                existingPointList.Point_4 = pointListDto.Point_4;
-                existingPointList.Point_5 = pointListDto.Point_5;
-                existingPointList.Point_6 = pointListDto.Point_6;
-                existingPointList.Point_7 = pointListDto.Point_7;
-                existingPointList.Point_8 = pointListDto.Point_8;
-                existingPointList.Point_9 = pointListDto.Point_9;
-                existingPointList.Point_10 = pointListDto.Point_10;
+                existingCourse.Reviews.ReviewNumbers = reviewsDto.ReviewNumbers;
+                existingCourse.Reviews.FullStarUrl = reviewsDto.FullStarUrl;
+                existingCourse.Reviews.EmptyStarUrl = reviewsDto.EmptyStarUrl;
             }
-            await _pointListRepository.UpdateOne(existingPointList!);
 
+            await _courseRepository.UpdateOne(existingCourse!);
 
+            return true;
 
-
-            var existingReviews = await _reviewsRepository.GetOne(x => x.CourseEntityId == id);
-            if (existingReviews != null)
-            {
-                existingReviews.ReviewNumbers = reviewsDto.ReviewNumbers;
-                existingReviews.FullStarUrl = reviewsDto.FullStarUrl;
-                existingReviews.EmptyStarUrl = reviewsDto.EmptyStarUrl;
-            }
-            await _reviewsRepository.UpdateOne(existingReviews!);
-
-
-            return await _courseRepository.UpdateOne(existingCourse!);
         }
+
+
         catch (Exception e)
         {
             throw new Exception(e.Message);
