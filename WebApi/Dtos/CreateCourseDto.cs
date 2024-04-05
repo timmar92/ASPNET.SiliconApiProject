@@ -7,4 +7,5 @@ public class CreateCourseDto
     public DetailsListDto? DetailsList { get; set; }
     public PointListDto? PointList { get; set; }
     public ReviewsDto? Reviews { get; set; }
+    public CategoryDto? Category { get; set; }
 }

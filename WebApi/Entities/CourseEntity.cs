@@ -24,4 +24,6 @@ public class CourseEntity
     public Author? Author { get; set; }
     public Reviews? Reviews { get; set; }
 
+    public CategoryEntity? Category { get; set; }
+
 }

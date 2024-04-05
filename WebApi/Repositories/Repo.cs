@@ -45,11 +45,26 @@ public class Repo<TEntity>(DataContext context) where TEntity : class
         return false;
     }
 
+
+
     public virtual async Task<IEnumerable<TEntity>> GetAll()
     {
         try
         {
             return await _context.Set<TEntity>().ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine("ERROR :: " + ex.Message);
+        }
+        return null!;
+    }
+
+    public virtual IQueryable<TEntity> GetAllAsQueryable()
+    {
+        try
+        {
+            return _context.Set<TEntity>().AsQueryable();
         }
         catch (Exception ex)
         {

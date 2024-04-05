@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using WebApi.Dtos;
 using WebApi.Filters;
 using WebApi.Services;
@@ -43,16 +45,47 @@ public class CoursesController(CourseService courseService) : ControllerBase
     }
 
 
+    //[HttpGet]
+    //public async Task<IActionResult> GetCoursesAsync()
+    //{
+    //    try
+    //    {
+    //        var courses = await _courseService.GetAllCoursesAsync();
+    //        if (courses == null)
+    //        {
+    //            return NotFound();
+    //        }
+    //        return Ok(courses);
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+    //    }
+    //}
+
     [HttpGet]
-    public async Task<IActionResult> GetCoursesAsync()
+    public async Task<IActionResult> GetCoursesQueryAsync(string category = "", string searchQuery = "")
     {
         try
         {
-            var courses = await _courseService.GetAllCoursesAsync();
-            if (courses == null)
+            var query = _courseService.GetAllCoursesAsQueryable();
+            if (query == null)
             {
                 return NotFound();
             }
+            if(!string.IsNullOrEmpty(category) && category != "all")
+            {
+                query = query.Where(c => c.Category!.CategoryName == category);
+            }
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                query = query.Where(x => x.Title.Contains(searchQuery) || x.Author!.Name.Contains(searchQuery));
+            }
+
+            query = query.OrderByDescending(c => c.Id);
+
+            var courses = await query.ToListAsync();
+
             return Ok(courses);
         }
         catch (Exception ex)
@@ -60,6 +93,7 @@ public class CoursesController(CourseService courseService) : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
     }
+
 
 
     [HttpGet("{id}")]

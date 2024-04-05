@@ -31,6 +31,7 @@ builder.Services.AddScoped<PointListRepository>();
 builder.Services.AddScoped<ReviewsRepository>();
 builder.Services.AddScoped<SubscriberRepository>();
 builder.Services.AddScoped<ContactRepository>();
+builder.Services.AddScoped<CategoryRepository>();
 
 
 

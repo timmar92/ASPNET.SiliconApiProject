@@ -4,13 +4,14 @@ using WebApi.Repositories;
 
 namespace WebApi.Services;
 
-public class CourseService(CourseRepository courseRepository, AuthorRepository authorRepository, DetailsListRepository detailsListRepository, PointListRepository pointListRepository, ReviewsRepository reviewsRepository)
+public class CourseService(CourseRepository courseRepository, AuthorRepository authorRepository, DetailsListRepository detailsListRepository, PointListRepository pointListRepository, ReviewsRepository reviewsRepository, CategoryRepository categoryRepository)
 {
     private readonly CourseRepository _courseRepository = courseRepository;
     private readonly AuthorRepository _authorRepository = authorRepository;
     private readonly DetailsListRepository _detailsListRepository = detailsListRepository;
     private readonly PointListRepository _pointListRepository = pointListRepository;
     private readonly ReviewsRepository _reviewsRepository = reviewsRepository;
+    private readonly CategoryRepository _categoryRepository = categoryRepository;
 
     // Create
 
@@ -23,6 +24,7 @@ public class CourseService(CourseRepository courseRepository, AuthorRepository a
             var detailsListDto = dto.DetailsList;
             var pointListDto = dto.PointList;
             var reviewsDto = dto.Reviews;
+            var categoryDto = dto.Category;
 
             var course = new CourseEntity
             {
@@ -97,10 +99,16 @@ public class CourseService(CourseRepository courseRepository, AuthorRepository a
             };
             reviews = await _reviewsRepository.CreateOne(reviews);
 
+            var category = new CategoryEntity
+            {
+                CategoryName = categoryDto!.CategoryName,
+            };
+
             course.Author = author;
             course.DetailsList = detailsList;
             course.PointList = pointList;
             course.Reviews = reviews;
+            course.Category = category;
 
             return course;
         }
@@ -164,11 +172,42 @@ public class CourseService(CourseRepository courseRepository, AuthorRepository a
         return null!;
     }
 
-    public async Task<IEnumerable<CourseEntity>> GetAllCoursesAsync()
+    //public async Task<IEnumerable<CourseEntity>> GetAllCoursesAsync()
+    //{
+    //    try
+    //    {
+    //        return await _courseRepository.GetAll();
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        throw new Exception(e.Message);
+    //    }
+    //}
+
+    public IQueryable<CourseEntity> GetAllCoursesAsQueryable()
     {
         try
         {
-            return await _courseRepository.GetAll();
+            return _courseRepository.GetAllAsQueryable();
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+
+    }
+
+
+    public async Task<IEnumerable<CategoryEntity>> GetAllCategoriesAsync()
+    {
+        try
+        {
+            var categories = await _categoryRepository.GetAll();
+            if (categories != null)
+            {
+                return categories;
+            }
+            return null!;
         }
         catch (Exception e)
         {
