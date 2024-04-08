@@ -64,7 +64,7 @@ public class CoursesController(CourseService courseService) : ControllerBase
     //}
 
     [HttpGet]
-    public async Task<IActionResult> GetCoursesQueryAsync(string category = "", string searchQuery = "")
+    public async Task<IActionResult> GetCoursesQueryAsync(string category = "", string searchQuery = "", int pageNumber = 1, int pageSize = 10)
     {
         try
         {
@@ -84,9 +84,20 @@ public class CoursesController(CourseService courseService) : ControllerBase
 
             query = query.OrderByDescending(c => c.Id);
 
-            var courses = await query.ToListAsync();
+            var totalItems = await query.CountAsync();
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+            var courseList = await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
-            return Ok(courses);
+            var result = new
+            {
+                TotalItems = totalItems,
+                TotalPages = totalPages,
+                Courses = courseList
+            };
+
+            
+
+            return Ok(result);
         }
         catch (Exception ex)
         {
