@@ -198,6 +198,36 @@ namespace WebApi.Migrations
                     b.Property<string>("Detail_9")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Title_1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title_10")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title_2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title_3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title_4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title_5")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title_6")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title_7")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title_8")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title_9")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CourseEntityId")

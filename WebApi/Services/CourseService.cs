@@ -58,15 +58,25 @@ public class CourseService(CourseRepository courseRepository, AuthorRepository a
 
             var detailsList = new DetailsList
             {
-                Detail_1 = detailsListDto!.Detail_1,
+                Title_1 = detailsListDto!.Title_1,
+                Detail_1 = detailsListDto.Detail_1,
+                Title_2 = detailsListDto.Title_2,
                 Detail_2 = detailsListDto.Detail_2,
+                Title_3 = detailsListDto.Title_3,
                 Detail_3 = detailsListDto.Detail_3,
+                Title_4 = detailsListDto.Title_4,
                 Detail_4 = detailsListDto.Detail_4,
+                Title_5 = detailsListDto.Title_5,
                 Detail_5 = detailsListDto.Detail_5,
+                Title_6 = detailsListDto.Title_6,
                 Detail_6 = detailsListDto.Detail_6,
+                Title_7 = detailsListDto.Title_7,
                 Detail_7 = detailsListDto.Detail_7,
+                Title_8 = detailsListDto.Title_8,
                 Detail_8 = detailsListDto.Detail_8,
+                Title_9 = detailsListDto.Title_9,
                 Detail_9 = detailsListDto.Detail_9,
+                Title_10 = detailsListDto.Title_10,
                 Detail_10 = detailsListDto.Detail_10,
                 CourseEntityId = course.Id
             };
@@ -252,15 +262,25 @@ public class CourseService(CourseRepository courseRepository, AuthorRepository a
 
             if (detailsListDto != null && existingCourse!.DetailsList != null)
             {
+                existingCourse.DetailsList.Title_1 = detailsListDto.Title_1;
                 existingCourse.DetailsList.Detail_1 = detailsListDto.Detail_1;
+                existingCourse.DetailsList.Title_2 = detailsListDto.Title_2;
                 existingCourse.DetailsList.Detail_2 = detailsListDto.Detail_2;
+                existingCourse.DetailsList.Title_3 = detailsListDto.Title_3;
                 existingCourse.DetailsList.Detail_3 = detailsListDto.Detail_3;
+                existingCourse.DetailsList.Title_4 = detailsListDto.Title_4;
                 existingCourse.DetailsList.Detail_4 = detailsListDto.Detail_4;
+                existingCourse.DetailsList.Title_5 = detailsListDto.Title_5;
                 existingCourse.DetailsList.Detail_5 = detailsListDto.Detail_5;
+                existingCourse.DetailsList.Title_6 = detailsListDto.Title_6;
                 existingCourse.DetailsList.Detail_6 = detailsListDto.Detail_6;
+                existingCourse.DetailsList.Title_7 = detailsListDto.Title_7;
                 existingCourse.DetailsList.Detail_7 = detailsListDto.Detail_7;
+                existingCourse.DetailsList.Title_8 = detailsListDto.Title_8;
                 existingCourse.DetailsList.Detail_8 = detailsListDto.Detail_8;
+                existingCourse.DetailsList.Title_9 = detailsListDto.Title_9;
                 existingCourse.DetailsList.Detail_9 = detailsListDto.Detail_9;
+                existingCourse.DetailsList.Title_10 = detailsListDto.Title_10;
                 existingCourse.DetailsList.Detail_10 = detailsListDto.Detail_10;
             }
 
